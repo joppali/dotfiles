@@ -16,9 +16,9 @@ augroup END
 set noswapfile 
 
 " coler theme
-syntax on
-colorscheme railscasts
-set t_Co=256
+ syntax on
+" colorscheme railscasts
+ set t_Co=256
 
 " number
 set number
