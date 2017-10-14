@@ -103,3 +103,34 @@ function! LightLineMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 """"""""""""""""""""""""""""""""""""""""
+"# dein setup
+""""""""""""""""""""""""""""""""""""""""
+let s:dein_dir = $HOME . '/.vim/bundle'
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo_dir)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+    endif
+    execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir)
+    " Load and cached toml
+    " all plugins listed in toml
+    call dein#load_toml(s:dein_dir . '/rc/dein.toml', {'lazy': 0})
+    call dein#load_toml(s:dein_dir . '/rc/dein_lazy.toml', {'lazy': 1})
+    " if has('nvim')
+    "     call dein#load_toml(s:dein_dir . '/rc/dein_neo.toml', {'lazy': 0})
+    " endif
+    call dein#end()
+    call dein#save_state()
+endif
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+    call dein#install()
+endif
+""""""""""""""""""""""""""""""""""""""""
