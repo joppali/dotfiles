@@ -1,2 +1,2 @@
 100
-['Shougo/dein.vim', 'itchyny/lightline.vim']
+['Shougo/dein.vim', 'itchyny/lightline.vim', 'jistr/vim-nerdtree-tabs', 'scrooloose/nerdtree']

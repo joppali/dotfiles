@@ -1,3 +1,0 @@
-['/Users/kosuda/.vimrc', '/Users/kosuda/.vim/bundle/rc/dein.toml']
-{'dein.vim': {'lazy': 0, 'path': '/Users/kosuda/.vim/bundle/repos/github.com/Shougo/dein.vim', 'repo': 'Shougo/dein.vim', 'normalized_name': 'dein', 'merged': 0, 'type': 'git', 'rtp': '/Users/kosuda/.vim/bundle/repos/github.com/Shougo/dein.vim', 'sourced': 1, 'name': 'dein.vim'}, 'lightline.vim': {'lazy': 0, 'path': '/Users/kosuda/.vim/bundle/repos/github.com/itchyny/lightline.vim', 'repo': 'itchyny/lightline.vim', 'normalized_name': 'lightline', 'merged': 1, 'type': 'git', 'rtp': '/Users/kosuda/.vim/bundle/repos/github.com/itchyny/lightline.vim', 'sourced': 1, 'name': 'lightline.vim'}}
-{}
