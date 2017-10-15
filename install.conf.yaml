@@ -1,29 +1,11 @@
-- defaults:
-    link:
-        create: true
-        relink: true
-        force:  true
-
 - clean: ['~']
 
 - link:
-    ~/.eslintrc.json: vim/eslintrc.json
-    ~/.zprezto: zsh/zprezto/
-    ~/.vim: vim/.vim/
-    ~/.vimrc: vim/.vimrc
-    ~/.zlogin: zsh/.zlogin
-    ~/.zlogout: zsh/.zlogout
-    ~/.zpreztorc: zsh/.zpreztorc
-    ~/.zprofile: zsh/.zprofile
-    ~/.zshenv: zsh/.zshenv
     ~/.zshrc: zsh/.zshrc
+    ~/.vim: vim/.vim
+    ~/.vimrc: vim/.vimrc
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.tmux: tmux/.tmux
-    ~/.tmux-powerlinerc: tmux/.tmux-powerlinerc
-    ~/.gitignore_global: git/.gitignore_global
 
 - shell:
-    - [git submodule init]
-    - [git submodule update --init --recursive, Installing submodules]
-    - [git config --global core.excludesfile ~/.gitignore_global, Activating .gitignore_global]
-    - [curl -sL zplug.sh/installer | zsh, Installing zplug]
+  - [git submodule update --init --recursive, Installing submodules]

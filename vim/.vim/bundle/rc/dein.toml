@@ -2,7 +2,4 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'romainl/Apprentice'
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
