@@ -131,6 +131,10 @@ alias mkdir='mkdir -p'
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
 
+# vimのカラースキーマ
+alias tmux="TERM=screen-256color-bce tmux"
+set -g default-terminal "xterm"
+
 # グローバルエイリアス
 alias -g L='| less'
 alias -g G='| grep'
