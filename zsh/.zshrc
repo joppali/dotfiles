@@ -174,3 +174,7 @@ if [ $SHLVL = 1 ]; then
     # tmuxにセッションがなかったら新規セッションを立ち上げた際に分割処理設定を読み込む
     alias tmux="tmux -2 attach || tmux -2 new-session \; source-file ~/.tmux/vim-session"
 fi
+########################################
+# PATH関連
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"

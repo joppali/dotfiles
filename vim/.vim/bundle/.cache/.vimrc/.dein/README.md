@@ -1,157 +1,393 @@
-# No longer actively maintained
+# lightline.vim
+A light and configurable statusline/tabline plugin for Vim
 
-I'm no longer using vim-nerdtree-tabs and i'm no longer maintaining it
-actively.
+https://github.com/itchyny/lightline.vim
 
-In case you forked it and moved the code forward, e.g. by fixing a
-considerable chunk of
-the
-[reported issues](https://github.com/jistr/vim-nerdtree-tabs/issues),
-let me know and i'll link your fork here.
+### powerline (default)
 
-# NERDTree and tabs together in Vim, painlessly
+![lightline.vim - powerline](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/powerline.png)
 
-## Features
+### wombat
 
-This plugin aims at making NERDTree feel like a true panel, independent of tabs.
+![lightline.vim - wombat](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/wombat.png)
 
-* **Just one NERDTree**, always and ever. It will always look the same in
-  all tabs, including expanded/collapsed nodes, scroll position etc.
+### jellybeans
 
-* Open in all tabs / close in all tabs. Do this via `:NERDTreeTabsToggle`
+![lightline.vim - jellybeans](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/jellybeans.png)
 
-* Meaningful tab captions for inactive tabs. No more captions like 'NERD_tree_1'.
+### solarized dark
 
-* When you close a file, the tab closes with it. No NERDTree hanging open.
+![lightline.vim - solarized_dark](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/solarized_dark.png)
 
-* Autoopen NERDTree on GVim / MacVim startup.
+### solarized light
 
-Many of these features can be switched off. See section Configuration.
+![lightline.vim - solarized_light](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/solarized_light.png)
+
+### PaperColor light
+
+![lightline.vim - PaperColor](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/PaperColor.png)
+
+### seoul256
+
+![lightline.vim - seoul256](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/seoul256.png)
+
+### Dracula
+
+![lightline.vim - Dracula](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/Dracula.png)
+
+### one
+
+![lightline.vim - one](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/one.png)
+
+### landscape
+
+![lightline.vim - landscape](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/landscape.png)
+
+landscape is my colorscheme, which is a high-contrast cui-supported colorscheme, available at https://github.com/itchyny/landscape.vim
+
+## Why yet another clone of powerline?
++ [vim-powerline](https://github.com/Lokaltog/vim-powerline) is a nice plugin, but deprecated.
++ [powerline](https://github.com/powerline/powerline) is a nice plugin, but difficult to configure.
++ [vim-airline](https://github.com/vim-airline/vim-airline) is a nice plugin, but it uses too much functions of other plugins, which should be done by users in `.vimrc`.
+
+## Spirit of this plugin
++ Minimalism. The core script is very small to achive enough functions as a statusline plugin.
++ Configurability. You can create your own component and easily add to the statusline and the tabline.
++ Orthogonality. The plugin does not rely on the implementation of other plugins. Such plugin crossing settings should be configured by users.
 
 ## Installation
+### [Pathogen](https://github.com/tpope/vim-pathogen)
+1. Install with the following command.
 
-1. If you haven't already, install NERDTree (see https://github.com/scrooloose/nerdtree)
+        git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
 
-2.  Install the plugin **through Pathogen**:
+### [Vundle](https://github.com/VundleVim/Vundle.vim)
+1. Add the following configuration to your `.vimrc`.
 
-        cd ~/.vim/bundle
-        git clone https://github.com/jistr/vim-nerdtree-tabs.git
+        Plugin 'itchyny/lightline.vim'
 
-    Or **through Vundle**:
+2. Install with `:PluginInstall`.
 
-        Bundle 'jistr/vim-nerdtree-tabs'
+### [NeoBundle](https://github.com/Shougo/neobundle.vim)
+1. Add the following configuration to your `.vimrc`.
 
-    Or **through Janus**:
+        NeoBundle 'itchyny/lightline.vim'
 
-        cd ~/.janus
-        git clone https://github.com/jistr/vim-nerdtree-tabs.git
+2. Install with `:NeoBundleInstall`.
 
-3. Map :NERDTreeTabsToggle command to some combo so you don't have to type it.
-   Alternatively, you can use plug-mapping instead of a command, like this:
+### [vim-plug](https://github.com/junegunn/vim-plug)
+1. Add the following configuration to your `.vimrc`.
 
-        map <Leader>n <plug>NERDTreeTabsToggle<CR>
+        Plug 'itchyny/lightline.vim'
 
-4. Celebrate.
+2. Install with `:PlugInstall`.
 
-## Commands and Mappings
+## Introduction
+After installing this plugin, you restart the editor and will get a cool statusline.
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/1.png)
 
-Vim-nerdtree-tabs provides these commands:
+The color of the statusline changes due to the mode of Vim. Try typing something, selecting in visual mode and replacing some texts.
 
-* `:NERDTreeTabsOpen` switches NERDTree on for all tabs.
+If the statusline looks like
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/21.png)
 
-* `:NERDTreeTabsClose` switches NERDTree off for all tabs.
+add the following configuration to your `.vimrc`.
+```vim
+set laststatus=2
+```
 
-* `:NERDTreeTabsToggle` toggles NERDTree on/off for all tabs.
+If the statusline does not be coloured like
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/20.png)
 
-* `:NERDTreeTabsFind` find currently opened file and select it
+then modify `TERM` in your shell configuration (`.zshrc` for example)
+```sh
+export TERM=xterm-256color
+```
+and then add the following configure to your `.vimrc`.
+```vim
+if !has('gui_running')
+  set t_Co=256
+endif
+```
 
-* `:NERDTreeMirrorOpen` acts as `:NERDTreeMirror`, but smarter: When opening,
-  it first tries to use an existing tree (i.e. previously closed in this tab or
-  perform a mirror of another tab's tree). If all this fails, a new tree is
-  created. It is recommended that you use this command instead of
-  `:NERDTreeMirror`.
+Your statusline appears to work correctly? If yes, great, thanks for choosing lightline.vim! If no, please file a issue report to the [issue tracker](https://github.com/itchyny/lightline.vim/issues).
 
-* `:NERDTreeMirrorToggle` toggles NERDTree on/off in current tab, using
-  the same behavior as `:NERDTreeMirrorOpen`.
+By the way, `-- INSERT --` is unnecessary anymore because the mode information is displayed in the statusline.
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/13.png)
+If you want to get rid of it, configure as follows.
+```vim
+set noshowmode
+```
 
-* `:NERDTreeSteppedOpen` focuses the NERDTree, opening one first if none is present.
+## Colorscheme configuration
+The lightline.vim plugin provides multiple colorschemes to meet your editor colorscheme.
+Do not be confused, editor colorscheme rules how codes look like in buffers and lightline.vim has independent colorscheme feature, which rules how the statusline looks like.
 
-* `:NERDTreeSteppedClose` unfocuses the NERDTree, or closes/hides it if it was
-  not focused.
+If you are using wombat colorscheme, add the following setting to your `.vimrc`,
+```vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
+```
+restart Vim and the statusline looks like:
 
-* `:NERDTreeFocusToggle` focus the NERDTree or create it if focus is
-  on a file, unfocus NERDTree if focus is on NERDTree
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/2.png)
 
-There are also plug-mappings available with the same functionality:
+If the colors of the statusline do not change, move the settings of `g:lightline` before setting the editor colorscheme.
 
-* `<plug>NERDTreeTabsOpen`
-* `<plug>NERDTreeTabsClose`
-* `<plug>NERDTreeTabsToggle`
-* `<plug>NERDTreeTabsFind`
-* `<plug>NERDTreeMirrorOpen`
-* `<plug>NERDTreeMirrorToggle`
-* `<plug>NERDTreeSteppedOpen`
-* `<plug>NERDTreeSteppedClose`
+There are many lightline colorschemes available as screenshots shown above. See `:h g:lightline.colorscheme` for the complete list.
 
-## Configuration
+## Advanced configuration
+The default appearance of lightline.vim is carefully designed that the tutorial is enough here for most people.
+So please read this section if you really want to configure and enjoy the configurability of lightline.vim.
 
-You can switch on/off some features of the plugin by setting global vars to 1
-(for on) or 0 (for off) in your vimrc. Here are the options and their default
-values:
+Sometimes people want to display information of other plugins.
+For example git branch information, syntax check errors and some statuses of plugins.
 
-* `g:nerdtree_tabs_open_on_gui_startup` (default: `1`)  
-  Open NERDTree on gvim/macvim startup. (When set to `2`, 
-  open only if directory was given as startup argument).
+The lightline.vim plugin does not provide any plugin integration by default.
+This plugin considers orthogonality to be one of the important ideas, which means that the plugin does not rely on implementation of other plugins.
+Once a plugin starts to integrate with some famous plugins, it should be kept updated to follow the changes of the plugins, and should accept integration requests with new plugins and it will suffer from performance regression due to plugin availability checks.
 
-* `g:nerdtree_tabs_open_on_console_startup` (default: `0`)  
-  Open NERDTree on console vim startup. (When set to `2`, 
-  open only if directory was given as startup argument).
+Instead, lightline.vim provides a simple API that user can easily integrate with other plugins.
+Once you understand how to configure and how it will be displayed in the statusline, you can also tell how to integrate with your favorite plugins.
 
-* `g:nerdtree_tabs_no_startup_for_diff` (default: `1`)  
-  Do not open NERDTree if vim starts in diff mode
+Let's start to configure the appearance.
+The statusline is composed by multiple components.
+It shows the current mode, filename, modified status on the left, and file format, encoding, filetype and cursor positions on the right.
+So in order to add something in the statusline, you firstly create a new component and specify the place.
 
-* `g:nerdtree_tabs_smart_startup_focus` (default: `1`)  
-  On startup, focus NERDTree if opening a directory, focus file if opening
-  a file. (When set to `2`, always focus file window after startup).
+This is the hello world of lightline.vim component.
+```vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified', 'helloworld' ] ]
+      \ },
+      \ 'component': {
+      \   'helloworld': 'Hello, world!'
+      \ },
+      \ }
+```
+The statusline will look like:
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/3.png)
 
-* `g:nerdtree_tabs_open_on_new_tab` (default: `1`)  
-  Open NERDTree on new tab creation (if NERDTree was globally opened by
-  :NERDTreeTabsToggle)
+You have succeeded in displaying `Hello, world!` in the statusline.
+The `helloworld` component is added to `g:lightline.active.left` and its content is configured in `g:lightline.component`.
+The component contents are simply added to `&statusline`.
+Try `:echo &statusline`, it might be a little bit complicated, but you will find `Hello, world!` somewhere.
 
-* `g:nerdtree_tabs_meaningful_tab_names` (default: `1`)  
-  Unfocus NERDTree when leaving a tab for descriptive tab names
+You can use `'statusline'` syntax for lightline.vim components.
+Consult `:h 'statusline'` to see what's available here.
+For example, if you want to print the value of character under the cursor in hexadecimal, configure as
+```vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
+      \ },
+      \ }
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/4.png)
 
-* `g:nerdtree_tabs_autoclose` (default: `1`)  
-  Close current tab if there is only one window in it and it's NERDTree
+You want the character value information on the right hand side? OK, configure as
+```vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
+      \ },
+      \ }
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/5.png)
 
-* `g:nerdtree_tabs_synchronize_view` (default: `1`)  
-  Synchronize view of all NERDTree windows (scroll and cursor position)
+We have learned how to add a simple component.
 
-* `g:nerdtree_tabs_synchronize_focus` (default: `1`)  
-  Synchronize focus when switching windows (focus NERDTree after tab switch
-  if and only if it was focused before tab switch)
+- See `:h 'statusline'` to check the statusline flags.
+- Add a new component to `g:lightline.component`.
+- Add the component name to `g:lightline.active.left` or `g:lightline.active.right`.
 
-* `g:nerdtree_tabs_focus_on_files` (default: `0`)  
-  When switching into a tab, make sure that focus is on the file window,
-  not in the NERDTree window. (Note that this can get annoying if you use
-  NERDTree's feature "open in new tab silently", as you will lose focus on the
-  NERDTree.)
+You can also configure the statusline of inactive buffers by adding the component to `g:lightline.inactive.left` or `g:lightline.inactive.right`.
 
-* `g:nerdtree_tabs_startup_cd` (default: `1`)  
-  When given a directory name as a command line parameter when launching Vim,
-  `:cd` into it.
 
-* `g:nerdtree_tabs_autofind` (default: `0`)  
-  Automatically find and select currently opened file in NERDTree.
+Now let's add some integrations with other plugin.
+The name of the git branch is important these days.
+But lightline.vim does not provide this information by default because it is also one of plugin crossing configurations, and not all people want the integration.
 
-### Example
+In order to show the branch name in the statusline, install some plugins which provides the branch information.
+The [vim-fugitive](https://github.com/tpope/vim-fugitive) plugin is a famous plugin so let's integrate lightline.vim with it.
+If you don't like to install full git integration but just want to display the branch name in the statusline, you can use the [vim-gitbranch](https://github.com/itchyny/vim-gitbranch) plugin which provides `gitbranch#name` function.
+```vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/6.png)
 
-To run NERDTreeTabs on console vim startup, put into your .vimrc:
+Okay, now the statusline shows that we are coding at the master branch.
+What do we learn from this example?
 
-    let g:nerdtree_tabs_open_on_console_startup=1
+- Find out the function which is suitable to use in the statusline.
+- Create a function component. The previous `charvaluehex` component has `'statusline'` item configuration and registered in `g:lightline.component`. In the current example, we register the name of the function in `g:lightline.component_function`. It should return the string to be displayed in the statusline.
+- Add the component name `gitbranch` to `g:lightline.active.left` or `g:lightline.active.right`.
 
-## Credits
 
-The tab autoclose feature is stolen from Carl Lerche & Yehuda Katz's
-[Janus](https://github.com/carlhuda/janus). Thanks, guys!
+Here we have leaned two kinds of components.
 
+- component: it has a `%`-prefixed item which you can find the meaning at `:h 'statusline'`. All the default components of lightline.vim are components in this style. See the default components at `:h g:lightline.component`.
+- function component: the name of functions are registered. The function is called again and again so be careful not to register a heavy function. See the help with `:h g:lightline.component_function`.
+
+
+The function component is an important design for the configurability of lightline.vim.
+By providing the configuration interface via functions, you can adjust the statusline information as you wish.
+For the proof, let's look into some configuration examples in Q&amp;A style.
+
+### Can I hide the readonly component in the help buffer?
+Yes, create a function component for `readonly`.
+The configuration of function component has priority over the default component.
+```vim
+let g:lightline = {
+      \ 'component_function': {
+      \   'readonly': 'LightlineReadonly',
+      \ },
+      \ }
+
+function! LightlineReadonly()
+  return &readonly && &filetype !=# 'help' ? 'RO' : ''
+endfunction
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/7.png)
+
+### Can I hide the readonly component in other plugins buffer?
+Yes, modify the `LightlineReadonly` function as you wish.
+```vim
+function! LightlineReadonly()
+  return &readonly && &filetype !~# '\v(help|vimfiler|unite)' ? 'RO' : ''
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/8.png)
+
+### Can I display the plugin information at the filename component?
+Yes, overwrite the filename component.
+```vim
+let g:lightline = {
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+function! LightlineFilename()
+  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/9.png)
+
+### Can I display the plugin name at the mode component?
+Yes, overwrite the mode component.
+```vim
+let g:lightline = {
+      \ 'component_function': {
+      \   'mode': 'LightlineMode',
+      \ },
+      \ }
+
+function! LightlineMode()
+  return expand('%:t') ==# '__Tagbar__' ? 'Tagbar':
+        \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
+        \ &filetype ==# 'unite' ? 'Unite' :
+        \ &filetype ==# 'vimfiler' ? 'VimFiler' :
+        \ &filetype ==# 'vimshell' ? 'VimShell' :
+        \ lightline#mode()
+endfunction
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/10.png)
+
+### Can I trim the file format and encoding information on narrow windows?
+Yes, check `winwidth(0)` and return empty string with some threshold.
+```vim
+let g:lightline = {
+      \ 'component_function': {
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \ },
+      \ }
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/11.png)
+
+### Can I trim the bar between the filename and modified sign?
+Yes, by joining the two components.
+```vim
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename' ] ],
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+```
+![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/12.png)
+
+You can control the visibility and contents by writing simple functions.
+Now you notice how much function component is important for the configurability of lightline.vim.
+
+## Note for developers of other plugins
+Appearance consistency matters.
+
+The statusline is an important space for Vim users.
+Overwriting the statusline forcibly in your plugin is not a good idea.
+It is not hospitality, but just an annoying feature.
+If your plugin has such a feature, add an option to be modest.
+
+A good design is as follows.
+Firstly, give the users a clue to judge which buffer is the one your plugin creates.
+The filename is a manner and the filetype is another.
+Then, export a function which is useful to be shown in the statusline.
+Lastly, for advanced users, set important information in buffer variables so that the users can obtain the condition of the plugin easily.
+
+## Author
+itchyny (https://github.com/itchyny)
+
+## License
+This software is released under the MIT License, see LICENSE.
