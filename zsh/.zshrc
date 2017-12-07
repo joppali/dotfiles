@@ -6,8 +6,7 @@
 # 環境変数
 export LANG=ja_JP.UTF-8
 
-
-# 色を使用出来るようにする
+ #色を使用出来るようにする
 autoload -Uz colors
 colors
 
@@ -175,6 +174,12 @@ if [ $SHLVL = 1 ]; then
     alias tmux="tmux -2 attach || tmux -2 new-session \; source-file ~/.tmux/vim-session"
 fi
 ########################################
+########################################
 # PATH関連
+# anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
+
+
+# nodebrew
+export PATH="$HOME/.nodebrew/current/bin:$PATH"

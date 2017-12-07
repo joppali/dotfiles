@@ -15,7 +15,17 @@ augroup fileTypeIndent
 augroup END
 
 set noswapfile 
+filetype on
 
+"""""""""""
+" 検索系
+"""""""""""
+"検索文字列をハイライトする
+set hlsearch
+"インクリメンタルサーチを行う
+set incsearch
+ "大文字と小文字を区別しない
+set ignorecase
 
 " number
 set number
@@ -23,7 +33,6 @@ nmap <F5> :!python %
 
 " OSとクリップボードを共有する
 set clipboard=unnamed,autoselect
-
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
 " """"""""""""""""""""""""""""""
@@ -34,6 +43,17 @@ if has("autocmd")
     \ endif
 endif
 """"""""""""""""""""""""""""""
+
+"""""""""""
+" 検索系
+"""""""""""
+"括弧の補完
+inoremap { {}<ESC>i
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap < <><ESC>i
+inoremap ' ''<LEFT>
+inoremap " ""<LEFT>
 
 """""""""""""""""""""""""""""""""""""
 """"""""""""statas bar"""""""""""""""
