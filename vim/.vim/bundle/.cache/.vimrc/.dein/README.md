@@ -1,393 +1,206 @@
-# lightline.vim
-A light and configurable statusline/tabline plugin for Vim
+# ![Apprentice](http://romainl.github.io/Apprentice/images/logo.png)
 
-https://github.com/itchyny/lightline.vim
+Apprentice is a dark, low-contrast colorscheme for Vim based on the awesome [Sorcerer](http://www.vim.org/scripts/script.php?script_id=3299) by Jeet Sukumaran.
 
-### powerline (default)
+It is essentially a streamlined version of the original, with a reduced number of colors entirely taken from the default xterm palette to ensure a similar look in 256colors-ready terminal emulators and GUI Vim.
 
-![lightline.vim - powerline](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/powerline.png)
+Some code in MacVim:
 
-### wombat
+![image](http://romainl.github.io/Apprentice/images/0macvim.png)
 
-![lightline.vim - wombat](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/wombat.png)
+Some code in iTerm, with `TERM=xterm-256color`:
 
-### jellybeans
+![image](http://romainl.github.io/Apprentice/images/0256term.png)
 
-![lightline.vim - jellybeans](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/jellybeans.png)
+Some code in mintty, with `TERM=xterm-256color`:
 
-### solarized dark
+![image](http://romainl.github.io/Apprentice/images/0256mintty.png)
 
-![lightline.vim - solarized_dark](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/solarized_dark.png)
+Some code in iTerm, with `TERM=xterm`, using the Tango color palette:
 
-### solarized light
+![image](http://romainl.github.io/Apprentice/images/08termtango.png)
 
-![lightline.vim - solarized_light](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/solarized_light.png)
+## Preparing your environment.
 
-### PaperColor light
+Apprentice is designed first and foremost to look “good” in terminal emulators supporting 256 colors and in GUI Vim (GVim/MacVim). It supports lesser terminal emulators in the sense that it doesn’t break but it will definitely look “better” in more capable environments.
 
-![lightline.vim - PaperColor](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/PaperColor.png)
+### GVim/MacVim
 
-### seoul256
+There is nothing to do for GVim/MacVim as GUI Vim supports “True Color” by default.
 
-![lightline.vim - seoul256](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/seoul256.png)
+### “True Color” terminal emulators
 
-### Dracula
+Since January 2016, Vim has been able to talk in “True Color” to terminal emulators supporting that feature. This means that it is now not only possible but also very easy to have **the exact same colors** in TUI Vim and GUI Vim.
 
-![lightline.vim - Dracula](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/Dracula.png)
+In practice, this new development doesn't change much for Apprentice which uses the exact same colors in the GUI as it does in the TUI anyway. But you can still try “True Color” if your setup satisfies the requirements with the following command:
 
-### one
+    :set termguicolors
 
-![lightline.vim - one](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/one.png)
+See [this gist](https://gist.github.com/XVilka/8346728) for more information and support status and, of course, `:help termguicolors`.
 
-### landscape
+### 256color-ready terminal emulators
 
-![lightline.vim - landscape](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/landscape.png)
+Most terminal emulators in use nowadays *can* display 256 colors but most of them use a default `TERM` that tells Vim otherwise. Assuming your terminal emulator actually supports 256 colors, you must instruct it to brag about its terminal-hood by setting the correct `TERM` environment variable.
 
-landscape is my colorscheme, which is a high-contrast cui-supported colorscheme, available at https://github.com/itchyny/landscape.vim
+The “ideal” `TERM` usually includes the string `256color`, like `xterm-256color`. The actual value is highly dependent on your terminal emulator and/or your terminal multiplexer, though, so you will have to refer to their manual.
 
-## Why yet another clone of powerline?
-+ [vim-powerline](https://github.com/Lokaltog/vim-powerline) is a nice plugin, but deprecated.
-+ [powerline](https://github.com/powerline/powerline) is a nice plugin, but difficult to configure.
-+ [vim-airline](https://github.com/vim-airline/vim-airline) is a nice plugin, but it uses too much functions of other plugins, which should be done by users in `.vimrc`.
+### Working with 8/16 colors
 
-## Spirit of this plugin
-+ Minimalism. The core script is very small to achive enough functions as a statusline plugin.
-+ Configurability. You can create your own component and easily add to the statusline and the tabline.
-+ Orthogonality. The plugin does not rely on the implementation of other plugins. Such plugin crossing settings should be configured by users.
+As an alternative to changing your default `TERM` to `xterm-256color` or similar, you can keep its default value (usually something like `xterm` or `screen`) and set your terminal emulator to use [the Apprentice colorscheme](https://github.com/romainl/iterm2-colorschemes#readme) instead of its default colors.
 
-## Installation
-### [Pathogen](https://github.com/tpope/vim-pathogen)
-1. Install with the following command.
+The table below contains a subset of Apprentice’s palette. You can use a color picker or copy/paste these values:
 
-        git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
+| Intensity        | Normal                   | Intensity        | Bright                   |
+|------------------|--------------------------|------------------|--------------------------|
+| 0                | `#1C1C1C` ![#1C1C1C][0]  | 8                | `#444444` ![#444444][0]  |
+| 1                | `#AF5F5F` ![#AF5F5F][1]  | 9                | `#FF8700` ![#FF8700][9]  |
+| 2                | `#5F875F` ![#5F875F][2]  | 10               | `#87AF87` ![#87AF87][10] |
+| 3                | `#87875F` ![#87875F][3]  | 11               | `#FFFFAF` ![#FFFFAF][11] |
+| 4                | `#5F87AF` ![#5F87AF][4]  | 12               | `#8FAFD7` ![#8FAFD7][12] |
+| 5                | `#5F5F87` ![#5F5F87][5]  | 13               | `#8787AF` ![#8787AF][13] |
+| 6                | `#5F8787` ![#5F8787][6]  | 14               | `#5FAFAF` ![#5FAFAF][14] |
+| 7                | `#6C6C6C` ![#6C6C6C][7]  | 15               | `#FFFFFF` ![#FFFFFF][15] |
+| Foreground color | `#BCBCBC` ![#BCBCBC][16] | Background color | `#262626` ![#262626][17] |
 
-### [Vundle](https://github.com/VundleVim/Vundle.vim)
-1. Add the following configuration to your `.vimrc`.
+Here is a sample `~/.Xresources` for you Linux/BSD users. You can import this into [terminal.sexy](http://terminal.sexy) to convert it to the appropriate color scheme format for your preferred terminal emulator:
 
-        Plugin 'itchyny/lightline.vim'
+    *.foreground: #BCBCBC
+    *.background: #262626
+    *.color0:     #1C1C1C
+    *.color8:     #444444
+    *.color1:     #AF5F5F
+    *.color9:     #FF8700
+    *.color2:     #5F875F
+    *.color10:    #87AF87
+    *.color3:     #87875F
+    *.color11:    #FFFFAF
+    *.color4:     #5F87AF
+    *.color12:    #8FAFD7
+    *.color5:     #5F5F87
+    *.color13:    #8787AF
+    *.color6:     #5F8787
+    *.color14:    #5FAFAF
+    *.color7:     #6C6C6C
+    *.color15:    #FFFFFF
 
-2. Install with `:PluginInstall`.
+And a sample `~/.minttyrc` for you Cygwin users:
 
-### [NeoBundle](https://github.com/Shougo/neobundle.vim)
-1. Add the following configuration to your `.vimrc`.
+    ForegroundColour=188,188,188
+    BackgroundColour=38,38,38
+    Black=28,28,28
+    Red=175,95,95
+    Green=95,135,95
+    Yellow=135,135,95
+    Blue=95,135,175
+    Magenta=95,95,135
+    Cyan=95,135,135
+    White=108,108,108
+    BoldBlack=68,68,68
+    BoldRed=255,135,0
+    BoldGreen=135,175,135
+    BoldYellow=255,255,175
+    BoldBlue=143,175,215
+    BoldMagenta=135,135,175
+    BoldCyan=95,175,175
+    BoldWhite=255,255,255
 
-        NeoBundle 'itchyny/lightline.vim'
+Some code in iTerm, with `TERM=xterm`, using the color palette above:
 
-2. Install with `:NeoBundleInstall`.
+![image](http://romainl.github.io/Apprentice/images/08termapprentice.png)
 
-### [vim-plug](https://github.com/junegunn/vim-plug)
-1. Add the following configuration to your `.vimrc`.
+Some code in the Windows console, with `TERM=cygwin`, using the color palette above:
 
-        Plug 'itchyny/lightline.vim'
+![image](http://romainl.github.io/Apprentice/images/016console.png)
 
-2. Install with `:PlugInstall`.
+### All terminal emulators
 
-## Introduction
-After installing this plugin, you restart the editor and will get a cool statusline.
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/1.png)
+I recommend to adjust your terminal's background color to the one used in Apprentice if you want to avoid having a “frame” around Vim:
 
-The color of the statusline changes due to the mode of Vim. Try typing something, selecting in visual mode and replacing some texts.
+| Notation    | Value           |
+|-------------|-----------------|
+| xterm       | `235`           |
+| hexadecimal | `#262626`       |
+| rgb         | `rgb(38,38,38)` |
 
-If the statusline looks like
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/21.png)
+## Installing Apprentice.
 
-add the following configuration to your `.vimrc`.
-```vim
-set laststatus=2
-```
+Colorschemes must be placed in a directory named `colors` that is somewhere in Vim’s `runtimepath`:
 
-If the statusline does not be coloured like
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/20.png)
+The canonical location is:
 
-then modify `TERM` in your shell configuration (`.zshrc` for example)
-```sh
-export TERM=xterm-256color
-```
-and then add the following configure to your `.vimrc`.
-```vim
-if !has('gui_running')
-  set t_Co=256
-endif
-```
-
-Your statusline appears to work correctly? If yes, great, thanks for choosing lightline.vim! If no, please file a issue report to the [issue tracker](https://github.com/itchyny/lightline.vim/issues).
-
-By the way, `-- INSERT --` is unnecessary anymore because the mode information is displayed in the statusline.
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/13.png)
-If you want to get rid of it, configure as follows.
-```vim
-set noshowmode
-```
-
-## Colorscheme configuration
-The lightline.vim plugin provides multiple colorschemes to meet your editor colorscheme.
-Do not be confused, editor colorscheme rules how codes look like in buffers and lightline.vim has independent colorscheme feature, which rules how the statusline looks like.
-
-If you are using wombat colorscheme, add the following setting to your `.vimrc`,
-```vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-```
-restart Vim and the statusline looks like:
-
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/2.png)
-
-If the colors of the statusline do not change, move the settings of `g:lightline` before setting the editor colorscheme.
-
-There are many lightline colorschemes available as screenshots shown above. See `:h g:lightline.colorscheme` for the complete list.
-
-## Advanced configuration
-The default appearance of lightline.vim is carefully designed that the tutorial is enough here for most people.
-So please read this section if you really want to configure and enjoy the configurability of lightline.vim.
-
-Sometimes people want to display information of other plugins.
-For example git branch information, syntax check errors and some statuses of plugins.
-
-The lightline.vim plugin does not provide any plugin integration by default.
-This plugin considers orthogonality to be one of the important ideas, which means that the plugin does not rely on implementation of other plugins.
-Once a plugin starts to integrate with some famous plugins, it should be kept updated to follow the changes of the plugins, and should accept integration requests with new plugins and it will suffer from performance regression due to plugin availability checks.
-
-Instead, lightline.vim provides a simple API that user can easily integrate with other plugins.
-Once you understand how to configure and how it will be displayed in the statusline, you can also tell how to integrate with your favorite plugins.
-
-Let's start to configure the appearance.
-The statusline is composed by multiple components.
-It shows the current mode, filename, modified status on the left, and file format, encoding, filetype and cursor positions on the right.
-So in order to add something in the statusline, you firstly create a new component and specify the place.
-
-This is the hello world of lightline.vim component.
-```vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified', 'helloworld' ] ]
-      \ },
-      \ 'component': {
-      \   'helloworld': 'Hello, world!'
-      \ },
-      \ }
-```
-The statusline will look like:
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/3.png)
-
-You have succeeded in displaying `Hello, world!` in the statusline.
-The `helloworld` component is added to `g:lightline.active.left` and its content is configured in `g:lightline.component`.
-The component contents are simply added to `&statusline`.
-Try `:echo &statusline`, it might be a little bit complicated, but you will find `Hello, world!` somewhere.
-
-You can use `'statusline'` syntax for lightline.vim components.
-Consult `:h 'statusline'` to see what's available here.
-For example, if you want to print the value of character under the cursor in hexadecimal, configure as
-```vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified', 'charvaluehex' ] ]
-      \ },
-      \ 'component': {
-      \   'charvaluehex': '0x%B'
-      \ },
-      \ }
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/4.png)
-
-You want the character value information on the right hand side? OK, configure as
-```vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
-      \ },
-      \ 'component': {
-      \   'charvaluehex': '0x%B'
-      \ },
-      \ }
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/5.png)
-
-We have learned how to add a simple component.
-
-- See `:h 'statusline'` to check the statusline flags.
-- Add a new component to `g:lightline.component`.
-- Add the component name to `g:lightline.active.left` or `g:lightline.active.right`.
-
-You can also configure the statusline of inactive buffers by adding the component to `g:lightline.inactive.left` or `g:lightline.inactive.right`.
-
-
-Now let's add some integrations with other plugin.
-The name of the git branch is important these days.
-But lightline.vim does not provide this information by default because it is also one of plugin crossing configurations, and not all people want the integration.
-
-In order to show the branch name in the statusline, install some plugins which provides the branch information.
-The [vim-fugitive](https://github.com/tpope/vim-fugitive) plugin is a famous plugin so let's integrate lightline.vim with it.
-If you don't like to install full git integration but just want to display the branch name in the statusline, you can use the [vim-gitbranch](https://github.com/itchyny/vim-gitbranch) plugin which provides `gitbranch#name` function.
-```vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/6.png)
-
-Okay, now the statusline shows that we are coding at the master branch.
-What do we learn from this example?
-
-- Find out the function which is suitable to use in the statusline.
-- Create a function component. The previous `charvaluehex` component has `'statusline'` item configuration and registered in `g:lightline.component`. In the current example, we register the name of the function in `g:lightline.component_function`. It should return the string to be displayed in the statusline.
-- Add the component name `gitbranch` to `g:lightline.active.left` or `g:lightline.active.right`.
-
-
-Here we have leaned two kinds of components.
-
-- component: it has a `%`-prefixed item which you can find the meaning at `:h 'statusline'`. All the default components of lightline.vim are components in this style. See the default components at `:h g:lightline.component`.
-- function component: the name of functions are registered. The function is called again and again so be careful not to register a heavy function. See the help with `:h g:lightline.component_function`.
-
-
-The function component is an important design for the configurability of lightline.vim.
-By providing the configuration interface via functions, you can adjust the statusline information as you wish.
-For the proof, let's look into some configuration examples in Q&amp;A style.
-
-### Can I hide the readonly component in the help buffer?
-Yes, create a function component for `readonly`.
-The configuration of function component has priority over the default component.
-```vim
-let g:lightline = {
-      \ 'component_function': {
-      \   'readonly': 'LightlineReadonly',
-      \ },
-      \ }
-
-function! LightlineReadonly()
-  return &readonly && &filetype !=# 'help' ? 'RO' : ''
-endfunction
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/7.png)
-
-### Can I hide the readonly component in other plugins buffer?
-Yes, modify the `LightlineReadonly` function as you wish.
-```vim
-function! LightlineReadonly()
-  return &readonly && &filetype !~# '\v(help|vimfiler|unite)' ? 'RO' : ''
-endfunction
-
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/8.png)
-
-### Can I display the plugin information at the filename component?
-Yes, overwrite the filename component.
-```vim
-let g:lightline = {
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
-
-function! LightlineFilename()
-  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
-        \ &filetype ==# 'unite' ? unite#get_status_string() :
-        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
-        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-endfunction
-
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/9.png)
-
-### Can I display the plugin name at the mode component?
-Yes, overwrite the mode component.
-```vim
-let g:lightline = {
-      \ 'component_function': {
-      \   'mode': 'LightlineMode',
-      \ },
-      \ }
-
-function! LightlineMode()
-  return expand('%:t') ==# '__Tagbar__' ? 'Tagbar':
-        \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
-        \ &filetype ==# 'unite' ? 'Unite' :
-        \ &filetype ==# 'vimfiler' ? 'VimFiler' :
-        \ &filetype ==# 'vimshell' ? 'VimShell' :
-        \ lightline#mode()
-endfunction
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/10.png)
-
-### Can I trim the file format and encoding information on narrow windows?
-Yes, check `winwidth(0)` and return empty string with some threshold.
-```vim
-let g:lightline = {
-      \ 'component_function': {
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \ },
-      \ }
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/11.png)
-
-### Can I trim the bar between the filename and modified sign?
-Yes, by joining the two components.
-```vim
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename' ] ],
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
-
-function! LightlineFilename()
-  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-  let modified = &modified ? ' +' : ''
-  return filename . modified
-endfunction
-```
-![lightline.vim - tutorial](https://raw.githubusercontent.com/wiki/itchyny/lightline.vim/image/tutorial/12.png)
-
-You can control the visibility and contents by writing simple functions.
-Now you notice how much function component is important for the configurability of lightline.vim.
-
-## Note for developers of other plugins
-Appearance consistency matters.
-
-The statusline is an important space for Vim users.
-Overwriting the statusline forcibly in your plugin is not a good idea.
-It is not hospitality, but just an annoying feature.
-If your plugin has such a feature, add an option to be modest.
-
-A good design is as follows.
-Firstly, give the users a clue to judge which buffer is the one your plugin creates.
-The filename is a manner and the filetype is another.
-Then, export a function which is useful to be shown in the statusline.
-Lastly, for advanced users, set important information in buffer variables so that the users can obtain the condition of the plugin easily.
-
-## Author
-itchyny (https://github.com/itchyny)
-
-## License
-This software is released under the MIT License, see LICENSE.
+    ~/.vim/colors/apprentice.vim
+
+but it could be:
+
+    ~/.vim/bundle/apprentice/colors/apprentice.vim
+
+or whatever works for you.
+
+Arch users may be happy to hear that Apprentice [has landed in AUR](https://aur.archlinux.org/packages/vim-apprentice/). To install it, use an AUR helper — `yaourt -S vim-apprentice` — or download the `PKGBUILD` and do `$ makepkg -i`.
+
+## Enabling Apprentice.
+
+To test Apprentice, just type this command from *normal* mode and hit `Enter`:
+
+    :colorscheme apprentice
+
+If you like what you see and want to make Apprentice your default colorscheme, add this line to your `~/.vimrc`, preferably near the end, after any `syntax enable`, `syntax on`, `filetype ... on`, `call plug#end()`, or `call vundle#end()` line:
+
+    colorscheme apprentice
+
+## Lightline and Airline themes
+
+I removed them from `master` but you can still find them in the "fancylines-and-neovim" branch.
+
+## Neovim terminal theme
+
+I removed it from `master` but you can still find it in the "fancylines-and-neovim" branch.
+
+## What they say about Apprentice.
+
+* Vimgor, in #vim: *“A colorscheme as subtle, gentle and pleasant as its creator isn't.”*
+
+* Gfixler, in [r/vim](http://www.reddit.com/r/vim/comments/2fws13/syntax_on/cke2ued): *“I've been enjoying Apprentice. It's the only color scheme so far that I haven't felt like modifying in any way.”*
+
+* dddbbb, in [r/vim](http://www.reddit.com/r/vim/comments/2fws13/syntax_on/ckekyg1): *“Haha, you've been quoted in the readme. romainl is still with us in spirit! Apprentice looks nice, and it's great that seems simple to get it working in terminal (no t_co hacks).”*
+
+* Gfixler again, in [r/vim](http://www.reddit.com/r/vim/comments/30dph9/solarizedlike_colorschemes/cprnfxm): *“My favorite color scheme by far is Apprentice, but again, it's completely subjective. Pick something that makes you feel good while using it. I particularly love Apprentice's selection blue color. I select things all the time just to experience it. So pretty.”*
+
+;-)
+
+## Derivative works
+
+If light colorschemes are more your thing, [Disciple](https://github.com/romainl/Disciple) is an experimental and mostly unmaintained negative version of Apprentice.
+
+On the same note, [Lightning](https://github.com/wimstefan/Lightning) is a light fork of Apprentice worth considering.
+
+[Intern](https://github.com/drzel/intern-hexchat-theme) is an [HexChat](https://hexchat.github.io/) theme based on Apprentice.
+
+[This very enthusiastic fellow](https://github.com/xHN35RQ) created [a home](https://github.com/xHN35RQ/apprentice-colorschemes) for terminal emulator themes adapted from Apprentice.
+
+A port of Apprentice is available for the IDEA platform. Check it out [over there.](https://github.com/jpeddicord/apprentice-idea)
+
+[Elysian](https://github.com/nhooyr/elysian.vim) is a new very nice colorscheme for 256color terminal emulators inspired by Apprentice.
+
+[apprentice-theme](https://github.com/sjas/apprentice-theme) is a port to spacemacs.
+
+Go team!
+
+[0]:  http://romainl.github.io/Apprentice/images/1c1c1c.png
+[1]:  http://romainl.github.io/Apprentice/images/af5f5f.png
+[2]:  http://romainl.github.io/Apprentice/images/5f875f.png
+[3]:  http://romainl.github.io/Apprentice/images/87875f.png
+[4]:  http://romainl.github.io/Apprentice/images/5f87af.png
+[5]:  http://romainl.github.io/Apprentice/images/5f5f87.png
+[6]:  http://romainl.github.io/Apprentice/images/5f8787.png
+[7]:  http://romainl.github.io/Apprentice/images/6c6c6c.png
+[8]:  http://romainl.github.io/Apprentice/images/444444.png
+[9]:  http://romainl.github.io/Apprentice/images/ff8700.png
+[10]: http://romainl.github.io/Apprentice/images/87af87.png
+[11]: http://romainl.github.io/Apprentice/images/ffffaf.png
+[12]: http://romainl.github.io/Apprentice/images/8fafd7.png
+[13]: http://romainl.github.io/Apprentice/images/8787af.png
+[14]: http://romainl.github.io/Apprentice/images/5fafaf.png
+[15]: http://romainl.github.io/Apprentice/images/ffffff.png
+[16]: http://romainl.github.io/Apprentice/images/bcbcbc.png
+[17]: http://romainl.github.io/Apprentice/images/262626.png

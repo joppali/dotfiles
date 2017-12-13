@@ -15,3 +15,6 @@ repo = 'jistr/vim-nerdtree-tabs'
 
 [[plugins]]
 repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'slim-template/vim-slim'
