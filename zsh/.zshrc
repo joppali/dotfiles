@@ -177,9 +177,9 @@ fi
 ########################################
 # PATH関連
 # anyenv
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
+# export PATH="$HOME/.anyenv/bin:$PATH"
+# eval "$(anyenv init -)"
 
 
 # nodebrew
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
+# export PATH="$HOME/.nodebrew/current/bin:$PATH"
